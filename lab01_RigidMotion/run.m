@@ -55,7 +55,7 @@ htrack=line(ax,...
             "LineWidth",2,...
             "Color",[0,1,0]);
 % Зображення робота
-hrobot=rectangle(ax,
+hrobot=rectangle(ax,...
              "Position",[position(1)-0.5, position(2)-0.5, 1,1],...
              "Curvature",1,...
              "FaceColor",[1,1,1],...
@@ -68,27 +68,27 @@ hdirection=line(ax,...
              "Color",[1,0,0]);
 
 % Відпрацювання програми руху
-printf("Start simulation\n");
-for np=1:size(program,1),
+fprintf("Start simulation\n");
+for np=1:size(program,1)
   pause(0.5);
   % Зміщення позиції
   if program(np,1)==1,
     position_shift=direction*program(np,2);
     position = hposmat(position_shift)*position;
-    printf("Move forward %d units\n",program(np,2));
-  endif
+    fprintf("Move forward %d units\n",program(np,2));
+  end
   % Поворот
   if program(np,1)==2,
     direction_angle=program(np,2);
     direction= hrotmat(direction_angle)*direction;
-    printf("Rotate %d degrees\n",program(np,2));
-  endif
+    fprintf("Rotate %d degrees\n",program(np,2));
+  end
   %Збереження нової позиції
   track = [track;position(1),position(2)];
   % Модифікація графіки
   set(hrobot,"Position",[position(1)-0.5, position(2)-0.5, 1,1]);
   set(hdirection,"xdata",position(1)+[0,direction(1)],"ydata",position(2)+[0,direction(2)]);
   set(htrack, "xdata",track(:,1), "ydata",track(:,2));
-endfor
-printf("Done\n");
+  end
+fprintf("Done\n");
 
